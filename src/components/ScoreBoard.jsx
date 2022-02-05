@@ -7,6 +7,7 @@ function ScoreBoard({ currentScore, highscore }) {
       <h2 className="highscore">
         {`Highscore: ${highscore}`}
       </h2>
+      <h3>Max score: 12</h3>
     </div>
   );
 }

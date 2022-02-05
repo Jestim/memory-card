@@ -24,6 +24,7 @@
         "indent": ["error", 2],
         "eol-last": "off",
         "no-unused-vars": "warn",
-        "react/prop-types": "off"
+        "react/prop-types": "off",
+        "no-param-reassign": [2, { "props": false }]
     }
 }
