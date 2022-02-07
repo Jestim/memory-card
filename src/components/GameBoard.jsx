@@ -8,12 +8,12 @@ function GameBoard({
   resetCurrentScore,
   highscore,
   incrementHighscore,
+  handleisGameLost,
 }) {
   const shuffledCards = _.shuffle(originalCards);
   const [cards, setCards] = useState(shuffledCards);
 
   function resetCards() {
-    console.log('Reset cards called');
     const updatedCards = _.cloneDeep(cards);
 
     updatedCards.forEach((card) => {
@@ -24,7 +24,6 @@ function GameBoard({
   }
 
   function handleCardClick(e) {
-    console.log('handleCardClick called');
     const clickedCardId = e.currentTarget.id;
     const updatedCards = _.cloneDeep(cards);
 
@@ -32,12 +31,12 @@ function GameBoard({
       if (clickedCardId === updatedCards[i].id && updatedCards[i].hasBeenClicked) {
         resetCurrentScore();
         resetCards();
+        handleisGameLost();
         return;
       }
 
       if (clickedCardId === updatedCards[i].id && !updatedCards[i].hasBeenClicked) {
         incrementCurrentScore();
-        console.log('incrementCurrentScore called');
         updatedCards[i].hasBeenClicked = true;
         if (highscore <= currentScore) {
           incrementHighscore();
@@ -45,7 +44,6 @@ function GameBoard({
       }
     }
 
-    console.log(currentScore);
     setCards(_.shuffle(updatedCards));
   }
 
