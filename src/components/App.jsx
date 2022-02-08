@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import GameBoard from './GameBoard';
 import Header from './Header';
 import ScoreBoard from './ScoreBoard';
-import GameLost from './GameLost';
+import DisplayResult from './DisplayResult';
+import maxScore from './utils';
 
 function App() {
   const [currentScore, setCurrentScore] = useState(0);
   const [highscore, setHighscore] = useState(0);
   const [isGameLost, setIsGameLost] = useState(false);
+  const [isGameWon, setIsGameWon] = useState(false);
 
   const incrementCurrentScore = () => {
     setCurrentScore(currentScore + 1);
@@ -21,25 +23,37 @@ function App() {
     setHighscore(highscore + 1);
   };
 
-  const handleisGameLost = () => {
+  const handleIsGameLost = () => {
     setIsGameLost(true);
+  };
+
+  const handleIsGameWon = () => {
+    setIsGameWon(true);
   };
 
   const handleRetry = () => {
     setIsGameLost(false);
+    setIsGameWon(false);
+    resetCurrentScore();
   };
+
+  useEffect(() => {
+    if (currentScore === maxScore) {
+      handleIsGameWon();
+    }
+  }, [currentScore]);
 
   return (
     <div className="app">
       <Header />
-      {isGameLost
+      {isGameWon || isGameLost
         ? (
-          <GameLost
+          <DisplayResult
             currentScore={currentScore}
             handleRetry={handleRetry}
+            isGameWon={isGameWon}
           />
         ) : null}
-
       <ScoreBoard
         currentScore={currentScore}
         highscore={highscore}
@@ -47,10 +61,10 @@ function App() {
       <GameBoard
         currentScore={currentScore}
         incrementCurrentScore={incrementCurrentScore}
-        resetCurrentScore={resetCurrentScore}
         highscore={highscore}
         incrementHighscore={incrementHighscore}
-        handleisGameLost={handleisGameLost}
+        handleIsGameLost={handleIsGameLost}
+        isGameWon={isGameWon}
       />
     </div>
   );

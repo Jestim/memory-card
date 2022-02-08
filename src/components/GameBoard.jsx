@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import originalCards from './originalCards';
 
 function GameBoard({
   currentScore,
   incrementCurrentScore,
-  resetCurrentScore,
   highscore,
   incrementHighscore,
-  handleisGameLost,
+  handleIsGameLost,
+  isGameWon,
 }) {
   const shuffledCards = _.shuffle(originalCards);
   const [cards, setCards] = useState(shuffledCards);
@@ -29,9 +29,8 @@ function GameBoard({
 
     for (let i = 0; i < updatedCards.length; i += 1) {
       if (clickedCardId === updatedCards[i].id && updatedCards[i].hasBeenClicked) {
-        resetCurrentScore();
+        handleIsGameLost();
         resetCards();
-        handleisGameLost();
         return;
       }
 
@@ -46,6 +45,10 @@ function GameBoard({
 
     setCards(_.shuffle(updatedCards));
   }
+
+  useEffect(() => {
+    resetCards();
+  }, [isGameWon]);
 
   return (
     <div className="game-board">
