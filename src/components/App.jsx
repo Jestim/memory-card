@@ -41,6 +41,10 @@ function App() {
     if (currentScore === maxScore) {
       handleIsGameWon();
     }
+
+    if (currentScore > highscore) {
+      incrementHighscore();
+    }
   }, [currentScore]);
 
   return (
@@ -59,10 +63,7 @@ function App() {
         highscore={highscore}
       />
       <GameBoard
-        currentScore={currentScore}
         incrementCurrentScore={incrementCurrentScore}
-        highscore={highscore}
-        incrementHighscore={incrementHighscore}
         handleIsGameLost={handleIsGameLost}
         isGameWon={isGameWon}
       />

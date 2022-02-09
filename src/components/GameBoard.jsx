@@ -3,10 +3,7 @@ import _ from 'lodash';
 import originalCards from './originalCards';
 
 function GameBoard({
-  currentScore,
   incrementCurrentScore,
-  highscore,
-  incrementHighscore,
   handleIsGameLost,
   isGameWon,
 }) {
@@ -37,9 +34,6 @@ function GameBoard({
       if (clickedCardId === updatedCards[i].id && !updatedCards[i].hasBeenClicked) {
         incrementCurrentScore();
         updatedCards[i].hasBeenClicked = true;
-        if (highscore <= currentScore) {
-          incrementHighscore();
-        }
       }
     }
 
